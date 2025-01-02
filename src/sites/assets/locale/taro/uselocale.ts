@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react'
 
-var getLocale = () => {
+const getLocale = () => {
   let locale = ''
   return locale
 }
 
-var useLocale = (): [string, any] => {
-  var [locale, setLocale] = useState(getLocale())
-  var handlePopState = () => {
+const useLocale = (): [string, any] => {
+  const [locale, setLocale] = useState(getLocale())
+  const handlePopState = () => {
     setLocale(getLocale())
   }
   useEffect(() => {
