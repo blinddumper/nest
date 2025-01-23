@@ -19,7 +19,7 @@ export interface Options {
 function removeRtl(rule: any, canRemove: boolean) {
   if (!canRemove) return
 
-  let sourceFile = rule.source.input.file
+  const sourceFile = rule.source.input.file
   if (
     sourceFile &&
     sourceFile.indexOf('@nutui') === -1 &&
@@ -39,41 +39,41 @@ async function replaceCssVariables(
   exclude: string[] = []
 ) {
   cssVariablesContent.push(root.toResult().css)
-  let options: ProcessOptions<Document | Root> = {
+  const options: ProcessOptions<Document | Root> = {
     parser: parse,
     from: undefined,
   } as ProcessOptions<Root>
-  let replacedCss = postcss([
+  const replacedCss = postcss([
     cssVariables({
       preserve: (declaration) => {
         if (exclude.includes(declaration.prop)) {
           return true
         }
-        let cssvars = declaration.value.match(/var\((--nutui-[\w\d-]+)\)/)
+        const cssvars = declaration.value.match(/var\((--nutui-[\w\d-]+)\)/)
         if (cssvars && exclude.includes(cssvars[1])) return true
         return false
       },
     }),
   ]).process(cssVariablesContent.join('\n'), options).css
 
-  let replacedRoot = postcss.parse(replacedCss)
+  const replacedRoot = postcss.parse(replacedCss)
   root.raws = replacedRoot.raws
   root.nodes = replacedRoot.nodes
 }
 
 export function optimizeCss(opts: Options) {
-  let defaultConfig = {
+  const defaultConfig = {
     removeRtl: false,
     cssVariables: {
       include: [],
       type: 'normal',
     },
   }
-  let config = merge(defaultConfig, opts)
-  let cssVariablesContent: string[] = []
+  const config = merge(defaultConfig, opts)
+  const cssVariablesContent: string[] = []
   if (config.cssVariables.type !== 'normal') {
     config.cssVariables.include.forEach((p: string) => {
-      let content = ''
+      const content = ''
       try {
         // 从绝对路径读取 CSS 变量的内容
         content = fs.readFileSync(p).toString()
