@@ -3,7 +3,7 @@ import config from '../config/env';
 
 export class HttpClient {
   private checkStatus(response: AxiosResponse<any>): ResponseData {
-    let resData: ResponseData = {
+    const resData: ResponseData = {
       state: 0,
       value: {},
       message: ''
@@ -31,12 +31,12 @@ export class HttpClient {
     method: string,
     params: any
   ): Promise<ResponseData | null> {
-    let defaultHeaders = {
+    const defaultHeaders = {
       'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
     };
-    let headers = Object.assign(defaultHeaders, params.header);
+    const headers = Object.assign(defaultHeaders, params.header);
     try {
-      let options = {
+      const options = {
         method,
         url: config.baseUrl + url,
         data: params,
@@ -46,7 +46,7 @@ export class HttpClient {
         headers
       };
 
-      let res = await axios(options as AxiosRequestConfig);
+      const res = await axios(options as AxiosRequestConfig);
       return this.checkStatus(res);
     } catch (error) {
       console.error(error);
