@@ -1,15 +1,15 @@
-const config = require('../src/config.json')
-const path = require('path')
-const fs = require('fs-extra')
-const glob = require('glob')
+var config = require('../src/config.json')
+var path = require('path')
+var fs = require('fs-extra')
+var glob = require('glob')
 
 let fileStr = `@import '../theme-default.scss';\n@import '../variables.scss';\n`
-const projectID = process.env.VITE_APP_PROJECT_ID
+var projectID = process.env.VITE_APP_PROJECT_ID
 if (projectID) {
   fileStr = `@import '../theme-${projectID}.scss';\n@import '../variables-${projectID}.scss';\n`
 }
 let tasks = []
-const componentsScss = glob.sync('./src/packages/**/*.scss', { dotRelative: true })
+var componentsScss = glob.sync('./src/packages/**/*.scss', { dotRelative: true })
 componentsScss.map((cs) => {
   if (cs.indexOf('demo.scss') > -1) return
   tasks.push(
