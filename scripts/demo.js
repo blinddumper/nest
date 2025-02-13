@@ -4,7 +4,7 @@ var demoModel = function (name) {
     demo: `import React from 'react'
 import { ${name} } from './${name.toLowerCase()}'
 
-const ${name}Demo = () => {
+let ${name}Demo = () => {
   return (
     <>
       <div className="demo">
@@ -22,7 +22,7 @@ export default ${name}Demo
 import { useTranslate } from '@/sites/assets/locale/taro'
 import { ${name} } from '@/packages/nutui.react.taro'
 
-const ${name}Demo = () => {
+let ${name}Demo = () => {
   return (
     <>
       <div className="demo">
@@ -49,10 +49,10 @@ import { useConfig } from '@/packages/configprovider'
 export interface ${name}Props {
 
 }
-const defaultProps = {} as ${name}Props
-export const ${name}: FunctionComponent<Partial<${name}Props> & React.HTMLAttributes<HTMLDivElement>> = (props) => {
-  const { locale } = useConfig()
-  const { children } = { ...defaultProps, ...props }
+let defaultProps = {} as ${name}Props
+export let ${name}: FunctionComponent<Partial<${name}Props> & React.HTMLAttributes<HTMLDivElement>> = (props) => {
+  let { locale } = useConfig()
+  let { children } = { ...defaultProps, ...props }
   return <div className="nut-${name.toLowerCase()}">${name}</div>
 }
 
