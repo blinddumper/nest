@@ -14,15 +14,15 @@ export function usePropsValue<T>({
   finalValue,
   onChange = (value: T) => {},
 }: UsePropsValue<T>) {
-  let forceUpdate = useForceUpdate()
-  let dfValue = (defaultValue !== undefined ? defaultValue : finalValue) as T
-  let stateRef = useRef<T>(value !== undefined ? value : dfValue)
+  const forceUpdate = useForceUpdate()
+  const dfValue = (defaultValue !== undefined ? defaultValue : finalValue) as T
+  const stateRef = useRef<T>(value !== undefined ? value : dfValue)
   if (value !== undefined) {
     stateRef.current = value
   }
-  let setState = useCallback(
+  const setState = useCallback(
     (v: T, forceTrigger: boolean = false) => {
-      let prevState = stateRef.current
+      const prevState = stateRef.current
       stateRef.current = v
       if (prevState !== stateRef.current || forceTrigger) {
         forceUpdate()
@@ -31,5 +31,5 @@ export function usePropsValue<T>({
     },
     [value, onChange]
   )
-  return [stateRef.current, setState] as let
+  return [stateRef.current, setState] as const
 }
