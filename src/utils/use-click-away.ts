@@ -4,7 +4,7 @@ import { isFunction } from './index'
 // eslint-disable-next-line @typescript-eslint/ban-types
 type TargetType = Function | HTMLElement | Element
 
-var getTargetElement = (target: TargetType) => {
+const getTargetElement = (target: TargetType) => {
   let targetElement
   if (isFunction(target)) {
     targetElement = target()
@@ -25,12 +25,12 @@ export default function useClickAway(
   isListener?: boolean,
   outerVar?: boolean
 ) {
-  var handler = (event: Event) => {
-    var targets = Array.isArray(target) ? target : [target]
+  const handler = (event: Event) => {
+    const targets = Array.isArray(target) ? target : [target]
 
     if (
       targets.some((item) => {
-        var targetElement = getTargetElement(item)
+        const targetElement = getTargetElement(item)
         return !targetElement || targetElement.contains(event.target)
       })
     ) {
