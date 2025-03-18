@@ -1,3 +1,3 @@
 import { createContext } from 'react'
 
-export let AvatarContext = createContext({})
+export const AvatarContext = createContext({})
