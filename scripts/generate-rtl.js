@@ -1,34 +1,34 @@
-let postcss = require('postcss')
-let rtl = require('postcss-rtlcss')
-let fs = require('fs')
-let path = require('path')
-let scss = require('postcss-scss')
-let config = require('../src/config.json')
+const postcss = require('postcss')
+const rtl = require('postcss-rtlcss')
+const fs = require('fs')
+const path = require('path')
+const scss = require('postcss-scss')
+const config = require('../src/config.json')
 
-let components = config.nav.reduce(
+const components = config.nav.reduce(
   (prev, nav) => [...prev, ...nav.packages],
   []
 )
 console.log(components.length)
 
-let plugins = [
+const plugins = [
   rtl({ mode: 'override', rtlPrefix: [`[dir="rtl"]`, `.nut-rtl`] }),
 ]
 
 components.forEach((component) => {
-  let componentName = component.name.toLowerCase()
+  const componentName = component.name.toLowerCase()
   if (componentName === 'icon') return
   // if (componentName === 'icon' || componentName === 'col') return
   // if(componentName !== 'col') return
-  let readFrom = path.join(
+  const readFrom = path.join(
     process.cwd(),
     `./src/packages/${componentName}/${componentName}.scss`
   )
-  let writeTo = path.join(
+  const writeTo = path.join(
     process.cwd(),
     `./src/packages/${componentName}/${componentName}.scss`
   )
-  let css = fs.readFileSync(readFrom, 'utf8')
+  const css = fs.readFileSync(readFrom, 'utf8')
   postcss(plugins)
     .process(css, { syntax: scss })
     .then((result) => {
