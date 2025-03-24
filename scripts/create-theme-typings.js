@@ -1,23 +1,23 @@
-var glob = require('glob')
-var path = require('path')
-var fse = require('fs-extra')
-var prettier = require('prettier')
-var projectID = process.env.VITE_APP_PROJECT_ID
+const glob = require('glob')
+const path = require('path')
+const fse = require('fs-extra')
+const prettier = require('prettier')
+const projectID = process.env.VITE_APP_PROJECT_ID
 
-var UPPERCASE = /[\p{Lu}]/u
-var LOWERCASE = /[\p{Ll}]/u
-var LEADING_CAPITAL = /^[\p{Lu}](?![\p{Lu}])/gu
-var IDENTIFIER = /([\p{Alpha}\p{N}_]|$)/u
-var SEPARATORS = /[_.\- ]+/
+const UPPERCASE = /[\p{Lu}]/u
+const LOWERCASE = /[\p{Ll}]/u
+const LEADING_CAPITAL = /^[\p{Lu}](?![\p{Lu}])/gu
+const IDENTIFIER = /([\p{Alpha}\p{N}_]|$)/u
+const SEPARATORS = /[_.\- ]+/
 
-var LEADING_SEPARATORS = new RegExp('^' + SEPARATORS.source)
-var SEPARATORS_AND_IDENTIFIER = new RegExp(
+const LEADING_SEPARATORS = new RegExp('^' + SEPARATORS.source)
+const SEPARATORS_AND_IDENTIFIER = new RegExp(
   SEPARATORS.source + IDENTIFIER.source,
   'gu'
 )
-var NUMBERS_AND_IDENTIFIER = new RegExp('\\d+' + IDENTIFIER.source, 'gu')
+const NUMBERS_AND_IDENTIFIER = new RegExp('\\d+' + IDENTIFIER.source, 'gu')
 
-var preserveCamelCase = (
+const preserveCamelCase = (
   string,
   toLowerCase,
   toUpperCase,
@@ -29,7 +29,7 @@ var preserveCamelCase = (
   let isLastLastCharPreserved = false
 
   for (let index = 0; index < string.length; index++) {
-    var character = string[index]
+    const character = string[index]
     isLastLastCharPreserved = index > 2 ? string[index - 3] === '-' : true
 
     if (isLastCharLower && UPPERCASE.test(character)) {
@@ -62,13 +62,13 @@ var preserveCamelCase = (
   return string
 }
 
-var preserveConsecutiveUppercase = (input, toLowerCase) => {
+const preserveConsecutiveUppercase = (input, toLowerCase) => {
   LEADING_CAPITAL.lastIndex = 0
 
   return input.replace(LEADING_CAPITAL, (m1) => toLowerCase(m1))
 }
 
-var postProcess = (input, toUpperCase) => {
+const postProcess = (input, toUpperCase) => {
   SEPARATORS_AND_IDENTIFIER.lastIndex = 0
   NUMBERS_AND_IDENTIFIER.lastIndex = 0
 
@@ -103,12 +103,12 @@ function camelCase(input, options) {
     return ''
   }
 
-  var toLowerCase =
+  const toLowerCase =
     options.locale === false
       ? (string) => string.toLowerCase()
       : (string) => string.toLocaleLowerCase(options.locale)
 
-  var toUpperCase =
+  const toUpperCase =
     options.locale === false
       ? (string) => string.toUpperCase()
       : (string) => string.toLocaleUpperCase(options.locale)
@@ -121,7 +121,7 @@ function camelCase(input, options) {
     return options.pascalCase ? toUpperCase(input) : toLowerCase(input)
   }
 
-  var hasUpperCase = input !== toLowerCase(input)
+  const hasUpperCase = input !== toLowerCase(input)
 
   if (hasUpperCase) {
     input = preserveCamelCase(
@@ -145,7 +145,7 @@ function camelCase(input, options) {
 }
 
 function generate() {
-  var files = [
+  const files = [
     !projectID
       ? './src/styles/variables.scss'
       : `./src/styles/variables-${projectID}.scss`,
@@ -162,13 +162,13 @@ function generate() {
       })
     })
   ).then((data) => {
-    var result = data.reduce((pre, curr) => {
+    const result = data.reduce((pre, curr) => {
       return [...pre, ...curr]
     }, [])
-    var unique = Array.from(new Set(result))
+    const unique = Array.from(new Set(result))
 
-    var formatStrFunc = async () => {
-      var str = await prettier.format(`export type NutCSSVariables = ${unique.join('|')}`, {
+    const formatStrFunc = async () => {
+      const str = await prettier.format(`export type NutCSSVariables = ${unique.join('|')}`, {
         trailingComma: 'es5',
         semi: false,
         singleQuote: true,
@@ -188,9 +188,9 @@ function generate() {
 
 function matchCssVarFromText(text) {
   if (!text) return []
-  var matched = text.match(/--nutui[\w\-]*/gi)
+  const matched = text.match(/--nutui[\w\-]*/gi)
   if (!matched) return []
-  var variables = matched.map((cssVar) => `'${camelCase(cssVar)}'`)
+  const variables = matched.map((cssVar) => `'${camelCase(cssVar)}'`)
   return variables
 }
 
