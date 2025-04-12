@@ -4,9 +4,9 @@ import path from 'path'
 import atImport from 'postcss-import'
 import config from './package.json'
 
-var { resolve } = path
+const { resolve } = path
 let fileStr = `@import "@/styles/variables.scss";@import '@/styles/theme-default.scss';\n`
-var projectID = process.env.VITE_APP_PROJECT_ID
+const projectID = process.env.VITE_APP_PROJECT_ID
 if (projectID) {
   fileStr = `@import '@/styles/variables-${projectID}.scss';@import '@/styles/theme-${projectID}.scss';\n`
 }
