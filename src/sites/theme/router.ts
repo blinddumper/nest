@@ -1,9 +1,9 @@
-var modulesPage = import.meta.glob('/src/packages/**/doc.md', {
+const modulesPage = import.meta.glob('/src/packages/**/doc.md', {
   as: 'raw',
   eager: true
 })
-var routes: any[] = []
-for (var path in modulesPage) {
+const routes: any[] = []
+for (const path in modulesPage) {
   let name = (/packages\/(.*)\/doc\.md/.exec(path) as any[])[1]
   routes.push({
     path: '/zh-CN/component/' + name,
@@ -12,12 +12,12 @@ for (var path in modulesPage) {
   })
 }
 
-var modulesENPage = import.meta.glob('/src/packages/**/doc.en-US.md', {
+const modulesENPage = import.meta.glob('/src/packages/**/doc.en-US.md', {
   as: 'raw',
   eager: true
 })
 // console.log('modulesENPage', modulesENPage)
-for (var path in modulesENPage) {
+for (const path in modulesENPage) {
   let name = (/packages\/(.*)\/doc\.en-US\.md/.exec(path) as any[])[1]
   routes.push({
     path: '/en-US/component/' + name,
@@ -26,12 +26,12 @@ for (var path in modulesENPage) {
   })
 }
 
-var modulesTaroPage = import.meta.glob('/src/packages/**/doc.taro.md', {
+const modulesTaroPage = import.meta.glob('/src/packages/**/doc.taro.md', {
   as: 'raw',
   eager: true
 })
 // console.log('modulesTaroPage', modulesTaroPage)
-for (var path in modulesTaroPage) {
+for (const path in modulesTaroPage) {
   let name = (/packages\/(.*)\/doc\.taro\.md/.exec(path) as any[])[1]
   routes.push({
     path: '/en-US/component/' + name + '-taro',
